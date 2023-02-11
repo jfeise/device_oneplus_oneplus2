@@ -29,6 +29,7 @@ namespace V1_0 {
 namespace implementation {
 
 constexpr const char kControlPath[] = "/proc/s1302/virtual_key";
+constexpr const char kSwapPath[] = "/proc/s1302/key_rep";
 
 
 // Methods from ::vendor::lineage::touch::V1_0::IKeyDisabler follow.
@@ -47,6 +48,13 @@ Return<bool> KeyDisabler::setEnabled(bool enabled) {
     if (!android::base::WriteStringToFile((enabled ? "1" : "0"), kControlPath)) {
         LOG(ERROR) << "Failed to write " << kControlPath;
         return false;
+    }
+    if (!enabled) {
+        // Swap hardware buttons
+        // Eventually get info from settings
+        if (!android::base::WriteStringToFile("1"), kSwapPath)) {
+            LOG(ERROR) << "Failed to write " << kSwapPath;
+        }
     }
 
     return true;
