@@ -52,7 +52,7 @@ Return<bool> KeyDisabler::setEnabled(bool enabled) {
     if (!enabled) {
         // Swap hardware buttons
         // Eventually get info from settings
-        if (!android::base::WriteStringToFile("1"), kSwapPath) {
+        if (!android::base::WriteStringToFile("1", kSwapPath)) {
             LOG(ERROR) << "Failed to write " << kSwapPath;
         }
     }
